@@ -667,7 +667,7 @@ function OrionLib:MakeNotification(NotificationConfig)
         function()
             NotificationConfig.Name = NotificationConfig.Name or "Notification"
             NotificationConfig.Content = NotificationConfig.Content or "Test"
-            NotificationConfig.Image = NotificationConfig.Image or "rbxassetid://121227563684973"
+            NotificationConfig.Image = NotificationConfig.Image or "rbxassetid://4384403532"
             NotificationConfig.Time = NotificationConfig.Time or 15
 
             local NotificationParent =
@@ -825,8 +825,8 @@ function OrionLib:MakeWindow(WindowConfig)
     WindowConfig.CloseCallback = WindowConfig.CloseCallback or function()
         end
     WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
-    WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://121227563684973"
-    WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://121227563684973"
+    WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://8834748103"
+    WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://8834748103"
     WindowConfig.SearchBar = WindowConfig.SearchBar or nil
     OrionLib.Folder = WindowConfig.ConfigFolder
     OrionLib.SaveCfg = WindowConfig.SaveConfig
@@ -3322,5 +3322,68 @@ end
 function OrionLib:Destroy()
     Orion:Destroy()
 end
+
+function OrionLib:SetTheme(ThemeName)
+    if OrionLib.Themes[ThemeName] then
+        OrionLib.SelectedTheme = ThemeName
+        for name, objects in pairs(OrionLib.ThemeObjects) do
+            for _, obj in ipairs(objects) do
+                obj[ReturnProperty(obj)] = OrionLib.Themes[ThemeName][name]
+            end
+        end
+    end
+end
+
+function OrionLib:AddMinimizeButton(config)
+    local btn = Instance.new("ImageButton")
+    for prop, val in pairs(config.Button or {}) do
+        btn[prop] = val
+    end
+
+    local stroke = Instance.new("UIStroke")
+    for prop, val in pairs(config.Stroke or {}) do
+        stroke[prop] = val
+    end
+    stroke.Parent = btn
+
+    local corner = Instance.new("UICorner")
+    for prop, val in pairs(config.Corner or {}) do
+        corner[prop] = val
+    end
+    corner.Parent = btn
+
+    btn.Parent = game:GetService("CoreGui")
+
+    btn.MouseButton1Click:Connect(function()
+        local gui = game:GetService("CoreGui"):FindFirstChild("Orion")
+        if gui then gui.Enabled = not gui.Enabled end
+    end)
+end
+
+function OrionLib:AddDiscordInvite(config)
+    local btn = Instance.new("ImageButton")
+    btn.Name = config.Name or "Discord"
+    btn.Size = UDim2.new(0, 120, 0, 32)
+    btn.Image = config.Logo or "rbxassetid://15298567397"
+    btn.BackgroundTransparency = 0.5
+    btn.Position = UDim2.new(0, 10, 1, -42)
+    btn.Parent = game:GetService("CoreGui")
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0.1, 0)
+    corner.Parent = btn
+
+    btn.MouseButton1Click:Connect(function()
+        if setclipboard then
+            setclipboard(config.Invite)
+        end
+        OrionLib:MakeNotification({
+            Name = "Convite copiado!",
+            Content = "Link do Discord foi copiado.",
+            Time = 4
+        })
+    end)
+end
+
 
 return OrionLib
