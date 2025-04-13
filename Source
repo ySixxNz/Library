@@ -3354,10 +3354,14 @@ function OrionLib:AddMinimizeButton(config)
 
     btn.Parent = game:GetService("CoreGui")
 
-    btn.MouseButton1Click:Connect(function()
-        local gui = game:GetService("CoreGui"):FindFirstChild("Orion")
-        if gui then gui.Enabled = not gui.Enabled end
-    end)
+    btn.MouseButton1Click:Connect(
+        function()
+            local gui = game:GetService("CoreGui"):FindFirstChild("Orion")
+            if gui then
+                gui.Enabled = not gui.Enabled
+            end
+        end
+    )
 end
 
 function OrionLib:AddDiscordInvite(config)
@@ -3373,17 +3377,20 @@ function OrionLib:AddDiscordInvite(config)
     corner.CornerRadius = UDim.new(0.1, 0)
     corner.Parent = btn
 
-    btn.MouseButton1Click:Connect(function()
-        if setclipboard then
-            setclipboard(config.Invite)
+    btn.MouseButton1Click:Connect(
+        function()
+            if setclipboard then
+                setclipboard(config.Invite)
+            end
+            OrionLib:MakeNotification(
+                {
+                    Name = "Convite copiado!",
+                    Content = "Link do Discord foi copiado.",
+                    Time = 4
+                }
+            )
         end
-        OrionLib:MakeNotification({
-            Name = "Convite copiado!",
-            Content = "Link do Discord foi copiado.",
-            Time = 4
-        })
-    end)
+    )
 end
-
 
 return OrionLib
