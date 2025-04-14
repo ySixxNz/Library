@@ -3332,7 +3332,7 @@ function OrionLib:MakeWindow(WindowConfig)
     return Functions
 end
 
-function Orion:BtnMinimize(config)
+function OrionLib:BtnMinimize(config)
     local buttonConfig = config.Button or {}
     local cornerConfig = config.Corner or {}
     local strokeConfig = config.Stroke or {}
