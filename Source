@@ -200,51 +200,61 @@ task.spawn(
 )
 
 local function MakeDraggable(DragPoint, Main)
-    --pcall(function()
-    local Dragging, DragInput, MousePos, FramePos = false
-    AddConnection(
-        DragPoint.InputBegan,
-        function(Input)
-            if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-                Dragging = true
-                MousePos = Input.Position
-                FramePos = Main.Position
+    pcall(
+        function()
+            local Dragging, DragInput, MousePos, FramePos = false
 
-                Input.Changed:Connect(
-                    function()
-                        if Input.UserInputState == Enum.UserInputState.End then
-                            Dragging = false
-                        end
+            AddConnection(
+                DragPoint.InputBegan,
+                function(Input)
+                    if
+                        Input.UserInputType == Enum.UserInputType.MouseButton1 or
+                            Input.UserInputType == Enum.UserInputType.Touch
+                     then
+                        Dragging = true
+                        MousePos = Input.Position
+                        FramePos = Main.Position
+
+                        Input.Changed:Connect(
+                            function()
+                                if Input.UserInputState == Enum.UserInputState.End then
+                                    Dragging = false
+                                end
+                            end
+                        )
                     end
-                )
-            end
+                end
+            )
+
+            AddConnection(
+                DragPoint.InputChanged,
+                function(Input)
+                    if
+                        Input.UserInputType == Enum.UserInputType.MouseMovement or
+                            Input.UserInputType == Enum.UserInputType.Touch
+                     then
+                        DragInput = Input
+                    end
+                end
+            )
+
+            AddConnection(
+                UserInputService.InputChanged,
+                function(Input)
+                    if Input == DragInput and Dragging then
+                        local Delta = Input.Position - MousePos
+                        Main.Position =
+                            UDim2.new(
+                            FramePos.X.Scale,
+                            FramePos.X.Offset + Delta.X,
+                            FramePos.Y.Scale,
+                            FramePos.Y.Offset + Delta.Y
+                        )
+                    end
+                end
+            )
         end
     )
-    AddConnection(
-        DragPoint.InputChanged,
-        function(Input)
-            if Input.UserInputType == Enum.UserInputType.MouseMovement then
-                DragInput = Input
-            end
-        end
-    )
-    AddConnection(
-        UserInputService.InputChanged,
-        function(Input)
-            if Input == DragInput and Dragging then
-                local Delta = Input.Position - MousePos
-                --TweenService:Create(Main, TweenInfo.new(0.05, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position  = UDim2.new(FramePos.X.Scale,FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)}):Play()
-                Main.Position =
-                    UDim2.new(
-                    FramePos.X.Scale,
-                    FramePos.X.Offset + Delta.X,
-                    FramePos.Y.Scale,
-                    FramePos.Y.Offset + Delta.Y
-                )
-            end
-        end
-    )
-    --end)
 end
 
 local function Create(Name, Properties, Children)
@@ -347,7 +357,7 @@ local function AddThemeObject(Object, Type)
     return Object
 end
 
-local function SetTheme()
+function OrionLib:SetTheme()
     for Name, Type in pairs(OrionLib.ThemeObjects) do
         for _, Object in pairs(Type) do
             Object[ReturnProperty(Object)] = OrionLib.Themes[OrionLib.SelectedTheme][Name]
@@ -814,7 +824,6 @@ function OrionLib:MakeWindow(WindowConfig)
     local UIHidden = false
 
     WindowConfig = WindowConfig or {}
-    WindowConfig.Name = WindowConfig.Name or "Six Hub"
     WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
     WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
     WindowConfig.HidePremium = WindowConfig.HidePremium or false
@@ -3354,38 +3363,52 @@ function OrionLib:BtnMinimize(config)
 
     local function update(input)
         local delta = input.Position - dragStart
-        ToggleButton.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        ToggleButton.Position =
+            UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 
-    ToggleButton.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = ToggleButton.Position
+    ToggleButton.InputBegan:Connect(
+        function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true
+                dragStart = input.Position
+                startPos = ToggleButton.Position
 
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
+                input.Changed:Connect(
+                    function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            dragging = false
+                        end
+                    end
+                )
+            end
         end
-    end)
+    )
 
-    ToggleButton.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
+    ToggleButton.InputChanged:Connect(
+        function(input)
+            if
+                input.UserInputType == Enum.UserInputType.MouseMovement or
+                    input.UserInputType == Enum.UserInputType.Touch
+             then
+                dragInput = input
+            end
         end
-    end)
+    )
 
-    UIS.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
+    UIS.InputChanged:Connect(
+        function(input)
+            if input == dragInput and dragging then
+                update(input)
+            end
         end
-    end)
+    )
 
-    ToggleButton.MouseButton1Click:Connect(function()
-        Orion.Enabled = not Orion.Enabled
-    end)
+    ToggleButton.MouseButton1Click:Connect(
+        function()
+            Orion.Enabled = not Orion.Enabled
+        end
+    )
 end
 
 function OrionLib:Switch()
