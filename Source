@@ -172,7 +172,6 @@ Orion.Parent = PARENT
 for _, Interface in ipairs(PARENT:GetChildren()) do
     if Interface.Name == Orion.Name and Interface ~= Orion then
         Interface:Destroy()
-        MinimizeGUI:Destroy()
     end
 end
 
