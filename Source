@@ -37,100 +37,100 @@ local OrionLib = {
             TextDark = Color3.fromRGB(150, 150, 150)
         },
         Purple = {
-            Main = Color3.fromRGB(50, 0, 100),
-            Second = Color3.fromRGB(80, 0, 150),
-            Stroke = Color3.fromRGB(120, 60, 180),
-            Divider = Color3.fromRGB(100, 50, 120),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(180, 180, 255)
+            Main = Color3.fromRGB(20, 0, 40),
+            Second = Color3.fromRGB(30, 0, 60),
+            Stroke = Color3.fromRGB(80, 0, 140),
+            Divider = Color3.fromRGB(100, 60, 160),
+            Text = Color3.fromRGB(230, 210, 255),
+            TextDark = Color3.fromRGB(180, 160, 220)
         },
         Yellow = {
-            Main = Color3.fromRGB(255, 223, 0),
-            Second = Color3.fromRGB(255, 183, 0),
-            Stroke = Color3.fromRGB(255, 150, 0),
-            Divider = Color3.fromRGB(255, 120, 0),
-            Text = Color3.fromRGB(50, 50, 50),
-            TextDark = Color3.fromRGB(100, 100, 100)
+            Main = Color3.fromRGB(40, 30, 0),
+            Second = Color3.fromRGB(60, 45, 0),
+            Stroke = Color3.fromRGB(120, 100, 0),
+            Divider = Color3.fromRGB(140, 120, 40),
+            Text = Color3.fromRGB(255, 255, 200),
+            TextDark = Color3.fromRGB(200, 200, 150)
         },
         White = {
-            Main = Color3.fromRGB(255, 255, 255),
-            Second = Color3.fromRGB(240, 240, 240),
+            Main = Color3.fromRGB(60, 60, 60),
+            Second = Color3.fromRGB(80, 80, 80),
             Stroke = Color3.fromRGB(200, 200, 200),
             Divider = Color3.fromRGB(180, 180, 180),
-            Text = Color3.fromRGB(0, 0, 0),
-            TextDark = Color3.fromRGB(50, 50, 50)
+            Text = Color3.fromRGB(255, 255, 255),
+            TextDark = Color3.fromRGB(220, 220, 220)
         },
         Blue = {
-            Main = Color3.fromRGB(0, 102, 204),
-            Second = Color3.fromRGB(0, 77, 153),
-            Stroke = Color3.fromRGB(0, 51, 102),
-            Divider = Color3.fromRGB(0, 38, 77),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(200, 200, 255)
+            Main = Color3.fromRGB(0, 20, 50),
+            Second = Color3.fromRGB(0, 30, 70),
+            Stroke = Color3.fromRGB(0, 100, 180),
+            Divider = Color3.fromRGB(50, 120, 200),
+            Text = Color3.fromRGB(200, 230, 255),
+            TextDark = Color3.fromRGB(150, 180, 220)
         },
         Green = {
-            Main = Color3.fromRGB(0, 150, 0),
-            Second = Color3.fromRGB(0, 120, 0),
-            Stroke = Color3.fromRGB(0, 100, 0),
-            Divider = Color3.fromRGB(0, 80, 0),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(180, 255, 180)
+            Main = Color3.fromRGB(0, 30, 0),
+            Second = Color3.fromRGB(0, 50, 0),
+            Stroke = Color3.fromRGB(0, 150, 80),
+            Divider = Color3.fromRGB(0, 170, 90),
+            Text = Color3.fromRGB(200, 255, 200),
+            TextDark = Color3.fromRGB(150, 200, 150)
         },
         Red = {
-            Main = Color3.fromRGB(255, 0, 0),
-            Second = Color3.fromRGB(200, 0, 0),
-            Stroke = Color3.fromRGB(150, 0, 0),
-            Divider = Color3.fromRGB(120, 0, 0),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(180, 180, 180)
+            Main = Color3.fromRGB(30, 0, 0),
+            Second = Color3.fromRGB(50, 0, 0),
+            Stroke = Color3.fromRGB(180, 0, 0),
+            Divider = Color3.fromRGB(200, 50, 50),
+            Text = Color3.fromRGB(255, 200, 200),
+            TextDark = Color3.fromRGB(220, 150, 150)
         },
         Orange = {
-            Main = Color3.fromRGB(255, 165, 0),
-            Second = Color3.fromRGB(255, 140, 0),
-            Stroke = Color3.fromRGB(200, 120, 0),
-            Divider = Color3.fromRGB(180, 110, 0),
-            Text = Color3.fromRGB(50, 50, 50),
-            TextDark = Color3.fromRGB(100, 100, 100)
+            Main = Color3.fromRGB(40, 20, 0),
+            Second = Color3.fromRGB(60, 30, 0),
+            Stroke = Color3.fromRGB(200, 100, 0),
+            Divider = Color3.fromRGB(220, 140, 40),
+            Text = Color3.fromRGB(255, 235, 200),
+            TextDark = Color3.fromRGB(200, 190, 160)
         },
         Pink = {
-            Main = Color3.fromRGB(255, 105, 180),
-            Second = Color3.fromRGB(255, 20, 147),
-            Stroke = Color3.fromRGB(255, 0, 127),
-            Divider = Color3.fromRGB(255, 105, 180),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(200, 200, 255)
+            Main = Color3.fromRGB(40, 10, 20),
+            Second = Color3.fromRGB(60, 0, 40),
+            Stroke = Color3.fromRGB(255, 105, 180),
+            Divider = Color3.fromRGB(255, 140, 200),
+            Text = Color3.fromRGB(255, 220, 240),
+            TextDark = Color3.fromRGB(220, 180, 210)
         },
         Cyan = {
-            Main = Color3.fromRGB(0, 255, 255),
-            Second = Color3.fromRGB(0, 204, 204),
-            Stroke = Color3.fromRGB(0, 153, 153),
-            Divider = Color3.fromRGB(0, 102, 102),
-            Text = Color3.fromRGB(0, 0, 0),
-            TextDark = Color3.fromRGB(100, 100, 100)
+            Main = Color3.fromRGB(0, 40, 40),
+            Second = Color3.fromRGB(0, 60, 60),
+            Stroke = Color3.fromRGB(0, 200, 200),
+            Divider = Color3.fromRGB(40, 220, 220),
+            Text = Color3.fromRGB(200, 255, 255),
+            TextDark = Color3.fromRGB(150, 220, 220)
         },
         Teal = {
-            Main = Color3.fromRGB(0, 128, 128),
-            Second = Color3.fromRGB(0, 102, 102),
-            Stroke = Color3.fromRGB(0, 76, 76),
-            Divider = Color3.fromRGB(0, 51, 51),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(180, 180, 180)
+            Main = Color3.fromRGB(0, 30, 30),
+            Second = Color3.fromRGB(0, 50, 50),
+            Stroke = Color3.fromRGB(0, 130, 130),
+            Divider = Color3.fromRGB(40, 150, 150),
+            Text = Color3.fromRGB(220, 255, 255),
+            TextDark = Color3.fromRGB(180, 220, 220)
         },
         Gray = {
-            Main = Color3.fromRGB(128, 128, 128),
-            Second = Color3.fromRGB(169, 169, 169),
-            Stroke = Color3.fromRGB(105, 105, 105),
-            Divider = Color3.fromRGB(112, 128, 144),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(180, 180, 180)
+            Main = Color3.fromRGB(30, 30, 30),
+            Second = Color3.fromRGB(50, 50, 50),
+            Stroke = Color3.fromRGB(100, 100, 100),
+            Divider = Color3.fromRGB(130, 130, 130),
+            Text = Color3.fromRGB(200, 200, 200),
+            TextDark = Color3.fromRGB(160, 160, 160)
         },
         Brown = {
-            Main = Color3.fromRGB(139, 69, 19),
-            Second = Color3.fromRGB(160, 82, 45),
-            Stroke = Color3.fromRGB(139, 0, 0),
-            Divider = Color3.fromRGB(160, 82, 45),
-            Text = Color3.fromRGB(255, 255, 255),
-            TextDark = Color3.fromRGB(180, 180, 180)
+            Main = Color3.fromRGB(30, 20, 10),
+            Second = Color3.fromRGB(50, 30, 20),
+            Stroke = Color3.fromRGB(150, 100, 60),
+            Divider = Color3.fromRGB(170, 120, 80),
+            Text = Color3.fromRGB(230, 210, 190),
+            TextDark = Color3.fromRGB(180, 160, 140)
         }
     },
     SelectedTheme = "Default",
@@ -172,6 +172,7 @@ Orion.Parent = PARENT
 for _, Interface in ipairs(PARENT:GetChildren()) do
     if Interface.Name == Orion.Name and Interface ~= Orion then
         Interface:Destroy()
+        MinimizeGUI:Destroy()
     end
 end
 
@@ -3324,9 +3325,7 @@ function OrionLib:MakeWindow(WindowConfig)
         end
         MainWindow:Destroy()
         MobileIcon:Destroy()
-        if MinimizeGUI then
-            MinimizeGUI:Destroy()
-        end
+        MinimizeGUI:Destroy()
     end
 
     return Functions
@@ -3421,9 +3420,7 @@ end
 
 function OrionLib:Destroy()
     Orion:Destroy()
-    if MinimizeGUI then
-        MinimizeGUI:Destroy()
-    end
+    MinimizeGUI:Destroy()
 end
 
 return OrionLib
