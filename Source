@@ -8,19 +8,28 @@ local MinimizeGUI
 
 if getgenv().LEEN_DEBUG then
     warn("[ DEBUG SCRIPT ]")
-
     warn("Swift Function:", swift_internal_correct)
     warn("Gethui Function:", gethui)
-    warn(
-        "Check:",
-        swift_internal_correct and "Swift Issue" or gethui and "Normal" or game:GetService("CoreGui") and "Normal ²"
-    )
 
+    local checkMessage = "Normal"
+    if swift_internal_correct then
+        checkMessage = "Swift Issue"
+    elseif gethui then
+        checkMessage = "Normal"
+    end
+
+    warn("Check:", checkMessage)
     warn("[ DEBUG END ]")
 end
 
-local PARENT =
-    swift_internal_correct and game:GetService("CoreGui") or gethui and gethui() or game:GetService("CoreGui")
+local PARENT
+if swift_internal_correct then
+    PARENT = game:GetService("CoreGui")
+elseif gethui then
+    PARENT = gethui()
+else
+    PARENT = game:GetService("CoreGui")
+end
 
 local OrionLib = {
     Elements = {},
@@ -69,10 +78,10 @@ local OrionLib = {
             TextDark = Color3.fromRGB(150, 180, 220)
         },
         Green = {
-            Main = Color3.fromRGB(0, 30, 0),
-            Second = Color3.fromRGB(0, 50, 0),
-            Stroke = Color3.fromRGB(0, 150, 80),
-            Divider = Color3.fromRGB(0, 170, 90),
+            Main = Color3.fromRGB(0, 50, 0),
+            Second = Color3.fromRGB(0, 80, 0),
+            Stroke = Color3.fromRGB(0, 200, 100),
+            Divider = Color3.fromRGB(0, 220, 110),
             Text = Color3.fromRGB(200, 255, 200),
             TextDark = Color3.fromRGB(150, 200, 150)
         },
@@ -107,14 +116,6 @@ local OrionLib = {
             Divider = Color3.fromRGB(40, 220, 220),
             Text = Color3.fromRGB(200, 255, 255),
             TextDark = Color3.fromRGB(150, 220, 220)
-        },
-        Teal = {
-            Main = Color3.fromRGB(0, 30, 30),
-            Second = Color3.fromRGB(0, 50, 50),
-            Stroke = Color3.fromRGB(0, 130, 130),
-            Divider = Color3.fromRGB(40, 150, 150),
-            Text = Color3.fromRGB(220, 255, 255),
-            TextDark = Color3.fromRGB(180, 220, 220)
         },
         Gray = {
             Main = Color3.fromRGB(30, 30, 30),
@@ -3318,19 +3319,26 @@ function OrionLib:MakeWindow(WindowConfig)
         _currentKey = Keybind
     end
 
-    function Functions:Destroy()
-        for _, Connection in next, OrionLib.Connections do
-            Connection:Disconnect()
-        end
-        MainWindow:Destroy()
-        MobileIcon:Destroy()
-        MinimizeGUI:Destroy()
+function Functions:Destroy()
+    for _, Connection in next, OrionLib.Connections do
+        Connection:Disconnect()
     end
 
-    return Functions
+    if OrionLib.MainWindow then
+        OrionLib.MainWindow:Destroy()
+    end
+
+    if OrionLib.MobileIcon then
+        OrionLib.MobileIcon:Destroy()
+    end
+
+    if OrionLib.MinimizeGUI then
+        OrionLib.MinimizeGUI:Destroy()
+        OrionLib.MinimizeGUI = nil
+    end
 end
 
-function OrionLib:BtnMinimize(config)
+    function OrionLib:BtnMinimize(config)
     local buttonConfig = config.Button or {}
     local cornerConfig = config.Corner or {}
     local strokeConfig = config.Stroke or {}
@@ -3365,61 +3373,52 @@ function OrionLib:BtnMinimize(config)
 
     local function update(input)
         local delta = input.Position - dragStart
-        ToggleButton.Position =
-            UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        ToggleButton.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 
-    ToggleButton.InputBegan:Connect(
-        function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                dragging = true
-                dragStart = input.Position
-                startPos = ToggleButton.Position
+    ToggleButton.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = ToggleButton.Position
 
-                input.Changed:Connect(
-                    function()
-                        if input.UserInputState == Enum.UserInputState.End then
-                            dragging = false
-                        end
-                    end
-                )
-            end
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
         end
-    )
+    end)
 
-    ToggleButton.InputChanged:Connect(
-        function(input)
-            if
-                input.UserInputType == Enum.UserInputType.MouseMovement or
-                    input.UserInputType == Enum.UserInputType.Touch
-             then
-                dragInput = input
-            end
+    ToggleButton.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
         end
-    )
+    end)
 
-    UIS.InputChanged:Connect(
-        function(input)
-            if input == dragInput and dragging then
-                update(input)
-            end
+    UIS.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
         end
-    )
+    end)
 
-    ToggleButton.MouseButton1Click:Connect(
-        function()
-            Orion.Enabled = not Orion.Enabled
-        end
-    )
+    ToggleButton.MouseButton1Click:Connect(function()
+        Orion.Enabled = not Orion.Enabled
+    end)
+
+    OrionLib.MinimizeGUI = MinimizeGUI
 end
-
-function OrionLib:Switch()
-    Orion.Enabled = not Orion.Enabled
 end
 
 function OrionLib:Destroy()
-    Orion:Destroy()
-    MinimizeGUI:Destroy()
+    if Orion then
+        Orion:Destroy()
+    end
+
+    if OrionLib.MinimizeGUI then
+        OrionLib.MinimizeGUI:Destroy()
+        OrionLib.MinimizeGUI = nil
+    end
 end
 
 return OrionLib
