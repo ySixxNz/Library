@@ -1275,31 +1275,109 @@ function OrionLib:MakeWindow(WindowConfig)
         end
     )
 
-    local function getUserLanguage()
-        return game:GetService("Players").LocalPlayer.LocaleId
+    function Tab:AddDiscordInvite(config)
+        local Title = config.Name or "Discord"
+        local Desc = config.Desc or ""
+        local Logo = config.Logo or ""
+        local Invite = config.Invite or ""
+
+        local Section = self:AddSection({Name = Title})
+
+        local Holder = Instance.new("Frame")
+        Holder.Size = UDim2.new(1, 0, 0, 80)
+        Holder.BackgroundTransparency = 1
+        Holder.Name = "DiscordInviteHolder"
+        Holder.Parent = Section.Section
+
+        local Frame = Instance.new("Frame")
+        Frame.Size = UDim2.new(1, -10, 0, 70)
+        Frame.Position = UDim2.new(0, 5, 0, 5)
+        Frame.BackgroundColor3 =
+            OrionLib.ThemeObjects.Main and OrionLib.ThemeObjects.Main[1] or Color3.fromRGB(40, 40, 40)
+        Frame.BorderSizePixel = 0
+        Frame.Parent = Holder
+
+        local UICorner = Instance.new("UICorner")
+        UICorner.CornerRadius = UDim.new(0, 6)
+        UICorner.Parent = Frame
+
+        local UIStroke = Instance.new("UIStroke")
+        UIStroke.Color = OrionLib.ThemeObjects.Stroke and OrionLib.ThemeObjects.Stroke[1] or Color3.fromRGB(60, 60, 60)
+        UIStroke.Thickness = 1
+        UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+        UIStroke.Parent = Frame
+
+        local Icon = Instance.new("ImageLabel")
+        Icon.Size = UDim2.new(0, 36, 0, 36)
+        Icon.Position = UDim2.new(0, 8, 0, 8)
+        Icon.Image = Logo
+        Icon.BackgroundTransparency = 1
+        Icon.Parent = Frame
+
+        local TitleLabel = Instance.new("TextLabel")
+        TitleLabel.Text = Title
+        TitleLabel.Font = Enum.Font.GothamBold
+        TitleLabel.TextSize = 12
+        TitleLabel.TextColor3 =
+            OrionLib.ThemeObjects.Text and OrionLib.ThemeObjects.Text[1] or Color3.fromRGB(255, 255, 255)
+        TitleLabel.BackgroundTransparency = 1
+        TitleLabel.Position = UDim2.new(0, 52, 0, 6)
+        TitleLabel.Size = UDim2.new(1, -60, 0, 14)
+        TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+        TitleLabel.Parent = Frame
+
+        local DescLabel = Instance.new("TextLabel")
+        DescLabel.Text = Desc
+        DescLabel.Font = Enum.Font.Gotham
+        DescLabel.TextSize = 11
+        DescLabel.TextWrapped = true
+        DescLabel.TextColor3 =
+            OrionLib.ThemeObjects.TextDark and OrionLib.ThemeObjects.TextDark[1] or Color3.fromRGB(180, 180, 180)
+        DescLabel.BackgroundTransparency = 1
+        DescLabel.Position = UDim2.new(0, 52, 0, 24)
+        DescLabel.Size = UDim2.new(1, -60, 0, 26)
+        DescLabel.TextXAlignment = Enum.TextXAlignment.Left
+        DescLabel.Parent = Frame
+
+        local JoinBtn = Instance.new("TextButton")
+        JoinBtn.Text = "Join"
+        JoinBtn.Font = Enum.Font.GothamBold
+        JoinBtn.TextSize = 12
+        JoinBtn.Size = UDim2.new(0, 60, 0, 20)
+        JoinBtn.Position = UDim2.new(1, -70, 1, -26)
+        JoinBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 127)
+        JoinBtn.TextColor3 = Color3.new(1, 1, 1)
+        JoinBtn.Parent = Frame
+
+        Instance.new("UICorner", JoinBtn).CornerRadius = UDim.new(0, 4)
+
+        local debounce = false
+        JoinBtn.MouseButton1Click:Connect(
+            function()
+                if debounce then
+                    return
+                end
+                debounce = true
+                setclipboard(Invite)
+                JoinBtn.Text = "Copied!"
+                JoinBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+                task.wait(3)
+                JoinBtn.Text = "Join"
+                JoinBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 127)
+                debounce = false
+            end
+        )
+
+        local InviteAPI = {}
+        function InviteAPI:Destroy()
+            Holder:Destroy()
+        end
+        function InviteAPI:Visible(state)
+            Holder.Visible = state
+        end
+
+        return InviteAPI
     end
-
-    local translations = {
-        en = {
-            Name = "Interface Closed",
-            Content = "Click on the <b>Icon</b> or press the <b>%s</b> key to open the GUI again!"
-        },
-        pt = {
-            Name = "Interface fechada",
-            Content = "Clique na <b>Ícone</b> ou pressione a tecla <b>%s</b> para abrir a GUI novamente!"
-        },
-        es = {
-            Name = "Interfaz cerrada",
-            Content = "Haz clic en el <b>Ícono</b> o presiona la tecla <b>%s</b> para abrir la GUI nuevamente!"
-        },
-        ru = {
-            Name = "Интерфейс закрыт",
-            Content = "Нажмите на <b>Иконку</b> или нажмите клавишу <b>%s</b>, чтобы снова открыть GUI!"
-        }
-    }
-
-    local userLanguage = getUserLanguage()
-    local translation = translations[userLanguage] or translations.en
 
     AddConnection(
         CloseBtn.MouseButton1Up,
@@ -1311,15 +1389,20 @@ function OrionLib:MakeWindow(WindowConfig)
                 MobileIcon.Visible = true
             end
 
-            local translatedContent = string.format(translation.Content, _currentKey.Name)
+            local content =
+                string.format(
+                "Click on the <b>Icon</b> or press the <b>%s</b> key to open the GUI again!",
+                _currentKey.Name
+            )
 
             OrionLib:MakeNotification(
                 {
-                    Name = translation.Name,
-                    Content = translatedContent,
+                    Name = "Interface Closed",
+                    Content = content,
                     Time = 5
                 }
             )
+
             WindowConfig.CloseCallback()
         end
     )
