@@ -983,142 +983,144 @@ function OrionLib:MakeWindow(WindowConfig)
                 ClearTextOnFocus = WindowConfig.SearchBar.ClearTextOnFocus or true
             }
         )
+
+        local TextboxActual = AddThemeObject(SearchBox, "Text")
+
+        local SearchBar =
+            AddThemeObject(
+            SetChildren(
+                SetProps(
+                    MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 1, 6),
+                    {
+                        Parent = WindowStuff,
+                        Size = UDim2.new(0, 130, 0, 24),
+                        Position = UDim2.new(1.013, -12, 0.075, 0),
+                        AnchorPoint = Vector2.new(1, 0.5)
+                    }
+                ),
+                {
+                    AddThemeObject(MakeElement("Stroke"), "Stroke"),
+                    TextboxActual
+                }
+            ),
+            "Main"
+        )
+
+        local function SearchHandle()
+            local Text = string.lower(SearchBox.Text)
+            for i, v in pairs(Tabs) do
+                if v:IsA("TextButton") then
+                    v.Visible = string.find(string.lower(i), Text) ~= nil
+                end
+            end
+        end
+
+        AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), SearchHandle)
     end
 
-    local TextboxActual = AddThemeObject(SearchBox, "Text")
+    local WindowName =
+        AddThemeObject(
+        SetProps(
+            MakeElement("Label", WindowConfig.Name, 14),
+            {
+                Size = UDim2.new(1, -30, 2, 0),
+                Position = UDim2.new(0, 25, 0, -24),
+                Font = Enum.Font.GothamBlack,
+                TextSize = 20
+            }
+        ),
+        "Text"
+    )
 
-    local SearchBar =
+    local WindowTopBarLine =
+        AddThemeObject(
+        SetProps(
+            MakeElement("Frame"),
+            {
+                Size = UDim2.new(1, 0, 0, 1),
+                Position = UDim2.new(0, 0, 1, -1)
+            }
+        ),
+        "Stroke"
+    )
+
+    local MainWindow =
         AddThemeObject(
         SetChildren(
             SetProps(
-                MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 1, 6),
+                MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 10),
                 {
-                    Parent = WindowStuff,
-                    Size = UDim2.new(0, 130, 0, 24),
-                    Position = UDim2.new(1.013, -12, 0.075, 0),
-                    AnchorPoint = Vector2.new(1, 0.5)
+                    Parent = Orion,
+                    Position = UDim2.new(0.5, -307, 0.5, -172),
+                    Size = UDim2.new(0, 615, 0, 344),
+                    ClipsDescendants = true
                 }
             ),
             {
-                AddThemeObject(MakeElement("Stroke"), "Stroke"),
-                TextboxActual
+                SetChildren(
+                    SetProps(
+                        MakeElement("TFrame"),
+                        {
+                            Size = UDim2.new(1, 0, 0, 50),
+                            Name = "TopBar"
+                        }
+                    ),
+                    {
+                        WindowName,
+                        WindowTopBarLine,
+                        AddThemeObject(
+                            SetChildren(
+                                SetProps(
+                                    MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 7),
+                                    {
+                                        Size = UDim2.new(0, 70, 0, 30),
+                                        Position = UDim2.new(1, -90, 0, 10)
+                                    }
+                                ),
+                                {
+                                    AddThemeObject(MakeElement("Stroke"), "Stroke"),
+                                    AddThemeObject(
+                                        SetProps(
+                                            MakeElement("Frame"),
+                                            {
+                                                Size = UDim2.new(0, 1, 1, 0),
+                                                Position = UDim2.new(0.5, 0, 0, 0)
+                                            }
+                                        ),
+                                        "Stroke"
+                                    ),
+                                    CloseBtn,
+                                    MinimizeBtn
+                                }
+                            ),
+                            "Second"
+                        )
+                    }
+                ),
+                DragPoint,
+                WindowStuff
             }
         ),
         "Main"
     )
 
-    local function SearchHandle()
-        local Text = string.lower(SearchBox.Text)
-        for i, v in pairs(Tabs) do
-            if v:IsA("TextButton") then
-                v.Visible = string.find(string.lower(i), Text) ~= nil
-            end
-        end
+    if WindowConfig.ShowIcon then
+        WindowName.Position = UDim2.new(0, 50, 0, -24)
+        local WindowIcon =
+            SetProps(
+            MakeElement("Image", WindowConfig.Icon),
+            {
+                Size = UDim2.new(0, 20, 0, 20),
+                Position = UDim2.new(0, 25, 0, 15)
+            }
+        )
+        WindowIcon.Parent = MainWindow.TopBar
     end
 
-    AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), SearchHandle)
+    MakeDraggable(DragPoint, MainWindow)
+
+    return Functions
 end
-
-local WindowName =
-    AddThemeObject(
-    SetProps(
-        MakeElement("Label", WindowConfig.Name, 14),
-        {
-            Size = UDim2.new(1, -30, 2, 0),
-            Position = UDim2.new(0, 25, 0, -24),
-            Font = Enum.Font.GothamBlack,
-            TextSize = 20
-        }
-    ),
-    "Text"
-)
-
-local WindowTopBarLine =
-    AddThemeObject(
-    SetProps(
-        MakeElement("Frame"),
-        {
-            Size = UDim2.new(1, 0, 0, 1),
-            Position = UDim2.new(0, 0, 1, -1)
-        }
-    ),
-    "Stroke"
-)
-
-local MainWindow =
-    AddThemeObject(
-    SetChildren(
-        SetProps(
-            MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 10),
-            {
-                Parent = Orion,
-                Position = UDim2.new(0.5, -307, 0.5, -172),
-                Size = UDim2.new(0, 615, 0, 344),
-                ClipsDescendants = true
-            }
-        ),
-        {
-            SetChildren(
-                SetProps(
-                    MakeElement("TFrame"),
-                    {
-                        Size = UDim2.new(1, 0, 0, 50),
-                        Name = "TopBar"
-                    }
-                ),
-                {
-                    WindowName,
-                    WindowTopBarLine,
-                    AddThemeObject(
-                        SetChildren(
-                            SetProps(
-                                MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 7),
-                                {
-                                    Size = UDim2.new(0, 70, 0, 30),
-                                    Position = UDim2.new(1, -90, 0, 10)
-                                }
-                            ),
-                            {
-                                AddThemeObject(MakeElement("Stroke"), "Stroke"),
-                                AddThemeObject(
-                                    SetProps(
-                                        MakeElement("Frame"),
-                                        {
-                                            Size = UDim2.new(0, 1, 1, 0),
-                                            Position = UDim2.new(0.5, 0, 0, 0)
-                                        }
-                                    ),
-                                    "Stroke"
-                                ),
-                                CloseBtn,
-                                MinimizeBtn
-                            }
-                        ),
-                        "Second"
-                    )
-                }
-            ),
-            DragPoint,
-            WindowStuff
-        }
-    ),
-    "Main"
-)
-
-if WindowConfig.ShowIcon then
-    WindowName.Position = UDim2.new(0, 50, 0, -24)
-    local WindowIcon =
-        SetProps(
-        MakeElement("Image", WindowConfig.Icon),
-        {
-            Size = UDim2.new(0, 20, 0, 20),
-            Position = UDim2.new(0, 25, 0, 15)
-        }
-    )
-    WindowIcon.Parent = MainWindow.TopBar
-end
-
-MakeDraggable(DragPoint, MainWindow)
 
 -- @ UI Visible & Mobile Icon Handle (Zv-yz/github);
 
