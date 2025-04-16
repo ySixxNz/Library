@@ -1177,7 +1177,9 @@ AddConnection(
             }
         )
 
-        WindowConfig.CloseCallback()
+        if typeof(WindowConfig.CloseCallback) == "function" then
+            WindowConfig.CloseCallback()
+        end
     end
 )
 
