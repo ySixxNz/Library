@@ -50,9 +50,7 @@ local Success, Response =
     function()
         Icons =
             HttpService:JSONDecode(
-            game:HttpGetAsync(
-                "https://raw.githubusercontent.com/Txdd4z/Library/refs/heads/main/Icons.json"
-            )
+            game:HttpGetAsync("https://raw.githubusercontent.com/Txdd4z/Library/refs/heads/main/Icons.json")
         ).icons
     end
 )
@@ -1990,9 +1988,14 @@ function OrionLib:MakeWindow(WindowConfig)
                     "Second"
                 )
 
+                local Dragging = false
+
                 SliderBar.InputBegan:Connect(
                     function(Input)
-                        if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        if
+                            Input.UserInputType == Enum.UserInputType.MouseButton1 or
+                                Input.UserInputType == Enum.UserInputType.Touch
+                         then
                             Dragging = true
                         end
                     end
@@ -2000,7 +2003,10 @@ function OrionLib:MakeWindow(WindowConfig)
 
                 SliderBar.InputEnded:Connect(
                     function(Input)
-                        if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        if
+                            Input.UserInputType == Enum.UserInputType.MouseButton1 or
+                                Input.UserInputType == Enum.UserInputType.Touch
+                         then
                             Dragging = false
                         end
                     end
@@ -2011,10 +2017,10 @@ function OrionLib:MakeWindow(WindowConfig)
                         if Dragging then
                             local InputPosition
                             if Input.UserInputType == Enum.UserInputType.MouseMovement then
-                                -- pc
+                                -- PC
                                 InputPosition = Input.Position
                             elseif Input.UserInputType == Enum.UserInputType.Touch then
-                                -- mobile/celular
+                                -- Mobile
                                 InputPosition = Input.Position
                             end
 
