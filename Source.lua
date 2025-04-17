@@ -1120,6 +1120,7 @@ function OrionLib:MakeWindow(WindowConfig)
     MakeDraggable(DragPoint, MainWindow)
 
     -- @ UI Visible & Mobile Icon Handle (Zv-yz/github);
+
     local _currentKey = Enum.KeyCode.RightShift
     local isMobile = table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform())
     local MobileIcon =
@@ -1173,18 +1174,9 @@ function OrionLib:MakeWindow(WindowConfig)
                 }
             )
 
-            local minimize = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
-            if minimize then
-                minimize:Destroy()
-            end
-
-            if typeof(OrionLib.MinimizeGUI) == "Instance" and OrionLib.MinimizeGUI:IsA("GuiObject") then
+            if OrionLib.MinimizeGUI and OrionLib.MinimizeGUI.Parent then
                 OrionLib.MinimizeGUI:Destroy()
                 OrionLib.MinimizeGUI = nil
-            end
-
-            if WindowConfig.CloseCallback then
-                WindowConfig.CloseCallback()
             end
         end
     )
@@ -3218,7 +3210,7 @@ function OrionLib:BtnMinimize(config)
     local cornerConfig = config.Corner or {}
     local strokeConfig = config.Stroke or {}
 
-    MinimizeGUI = Instance.new("ScreenGui")
+    local MinimizeGUI = Instance.new("ScreenGui")
     MinimizeGUI.Name = "ToggleGUI"
     MinimizeGUI.Parent = game:GetService("CoreGui")
 
@@ -3291,15 +3283,17 @@ function OrionLib:BtnMinimize(config)
             Orion.Enabled = not Orion.Enabled
         end
     )
+
+    OrionLib.MinimizeGUI = MinimizeGUI
 end
 
 function OrionLib:Destroy()
     if Orion then
         Orion:Destroy()
     end
-    local butaoMinimizar = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
-    if butaoMinimizar then
-        butaoMinimizar:Destroy()
+    if OrionLib.MinimizeGUI and OrionLib.MinimizeGUI.Parent then
+        OrionLib.MinimizeGUI:Destroy()
+        OrionLib.MinimizeGUI = nil
     end
 end
 
