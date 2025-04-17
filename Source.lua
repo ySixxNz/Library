@@ -595,6 +595,8 @@ function OrionLib:MakeNotification(NotificationConfig)
                 }
             )
 
+            local TweenService = game:GetService("TweenService")
+
             local NotificationFrame =
                 SetChildren(
                 SetProps(
@@ -643,43 +645,63 @@ function OrionLib:MakeNotification(NotificationConfig)
                 }
             )
 
-            TweenService:Create(
-                NotificationFrame,
-                TweenInfo.new(0.5, Enum.EasingStyle.Quint),
-                {Position = UDim2.new(0, 0, 0, 0)}
-            ):Play()
+            if NotificationFrame then
+                TweenService:Create(
+                    NotificationFrame,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Quint),
+                    {Position = UDim2.new(0, 0, 0, 0)}
+                ):Play()
 
-            wait(NotificationConfig.Time - 0.88)
-            local icon = NotificationFrame:FindFirstChild("Icon")
-            if icon then
-                TweenService:Create(icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+                wait(NotificationConfig.Time - 0.88)
+
+                local icon = NotificationFrame:FindFirstChild("Icon")
+                if icon then
+                    TweenService:Create(icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play(
+
+                    )
+                end
+
+                TweenService:Create(
+                    NotificationFrame,
+                    TweenInfo.new(0.8, Enum.EasingStyle.Quint),
+                    {BackgroundTransparency = 0.6}
+                ):Play()
+
+                wait(0.3)
+
+                if NotificationFrame:FindFirstChild("UIStroke") then
+                    TweenService:Create(
+                        NotificationFrame.UIStroke,
+                        TweenInfo.new(0.6, Enum.EasingStyle.Quint),
+                        {Transparency = 0.9}
+                    ):Play()
+                end
+
+                if NotificationFrame:FindFirstChild("Title") then
+                    TweenService:Create(
+                        NotificationFrame.Title,
+                        TweenInfo.new(0.6, Enum.EasingStyle.Quint),
+                        {TextTransparency = 0.4}
+                    ):Play()
+                end
+
+                if NotificationFrame:FindFirstChild("Content") then
+                    TweenService:Create(
+                        NotificationFrame.Content,
+                        TweenInfo.new(0.6, Enum.EasingStyle.Quint),
+                        {TextTransparency = 0.5}
+                    ):Play()
+                end
+
+                wait(0.05)
+
+                NotificationFrame:TweenPosition(UDim2.new(1, 20, 0, 0), "In", "Quint", 0.8, true)
+
+                wait(1.35)
+                NotificationFrame:Destroy()
+            else
+                warn("NotificationFrame was not created properly.")
             end
-            TweenService:Create(
-                NotificationFrame,
-                TweenInfo.new(0.8, Enum.EasingStyle.Quint),
-                {BackgroundTransparency = 0.6}
-            ):Play()
-            wait(0.3)
-            TweenService:Create(
-                NotificationFrame.UIStroke,
-                TweenInfo.new(0.6, Enum.EasingStyle.Quint),
-                {Transparency = 0.9}
-            ):Play()
-            TweenService:Create(
-                NotificationFrame.Title,
-                TweenInfo.new(0.6, Enum.EasingStyle.Quint),
-                {TextTransparency = 0.4}
-            ):Play()
-            TweenService:Create(
-                NotificationFrame.Content,
-                TweenInfo.new(0.6, Enum.EasingStyle.Quint),
-                {TextTransparency = 0.5}
-            ):Play()
-            wait(0.05)
-
-            NotificationFrame:TweenPosition(UDim2.new(1, 20, 0, 0), "In", "Quint", 0.8, true)
-            wait(1.35)
-            NotificationFrame:Destroy()
         end
     )
 end
