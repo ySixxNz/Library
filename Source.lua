@@ -51,7 +51,7 @@ local Success, Response =
         Icons =
             HttpService:JSONDecode(
             game:HttpGetAsync(
-                "https://raw.githubusercontent.com/frappedevs/lucideblox/refs/heads/master/src/modules/util/icons.json"
+                "https://raw.githubusercontent.com/Txdd4z/Library/refs/heads/main/Icons.json"
             )
         ).icons
     end
