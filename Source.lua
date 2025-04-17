@@ -1173,7 +1173,19 @@ function OrionLib:MakeWindow(WindowConfig)
                 }
             )
 
-            WindowConfig.CloseCallback()
+            local minimize = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
+            if minimize then
+                minimize:Destroy()
+            end
+
+            if typeof(OrionLib.MinimizeGUI) == "Instance" and OrionLib.MinimizeGUI:IsA("GuiObject") then
+                OrionLib.MinimizeGUI:Destroy()
+                OrionLib.MinimizeGUI = nil
+            end
+
+            if WindowConfig.CloseCallback then
+                WindowConfig.CloseCallback()
+            end
         end
     )
 
@@ -1971,6 +1983,7 @@ function OrionLib:MakeWindow(WindowConfig)
                         end
                     end
                 )
+
                 SliderBar.InputEnded:Connect(
                     function(Input)
                         if Input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1981,15 +1994,26 @@ function OrionLib:MakeWindow(WindowConfig)
 
                 UserInputService.InputChanged:Connect(
                     function(Input)
-                        if Dragging and Input.UserInputType == Enum.UserInputType.MouseMovement then
-                            local SizeScale =
-                                math.clamp(
-                                (Input.Position.X - SliderBar.AbsolutePosition.X) / SliderBar.AbsoluteSize.X,
-                                0,
-                                1
-                            )
-                            Slider:Set(SliderConfig.Min + ((SliderConfig.Max - SliderConfig.Min) * SizeScale))
-                            SaveCfg(game.GameId)
+                        if Dragging then
+                            local InputPosition
+                            if Input.UserInputType == Enum.UserInputType.MouseMovement then
+                                -- pc
+                                InputPosition = Input.Position
+                            elseif Input.UserInputType == Enum.UserInputType.Touch then
+                                -- mobile/celular
+                                InputPosition = Input.Position
+                            end
+
+                            if InputPosition then
+                                local SizeScale =
+                                    math.clamp(
+                                    (InputPosition.X - SliderBar.AbsolutePosition.X) / SliderBar.AbsoluteSize.X,
+                                    0,
+                                    1
+                                )
+                                Slider:Set(SliderConfig.Min + ((SliderConfig.Max - SliderConfig.Min) * SizeScale))
+                                SaveCfg(game.GameId)
+                            end
                         end
                     end
                 )
@@ -3167,22 +3191,6 @@ function OrionLib:MakeWindow(WindowConfig)
         return ElementFunction
     end
 
-    local Minimize = {}
-
-    Minimize.GUI = Instance.new("ScreenGui")
-    Minimize.GUI.Name = "ToggleGUI"
-    Minimize.GUI.Parent = game:GetService("CoreGui")
-
-    function Minimize:Destroy()
-        local gui = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
-        if gui then
-            gui:Destroy()
-        end
-        if self.GUI then
-            self.GUI:Destroy()
-        end
-    end
-
     function Functions.ChangeKey(Keybind)
         _currentKey = Keybind
     end
@@ -3199,9 +3207,6 @@ function OrionLib:MakeWindow(WindowConfig)
         end
         if MobileIcon then
             MobileIcon:Destroy()
-        end
-        if MinimizeGUI then
-            MinimizeGUI:Destroy()
         end
     end
 
@@ -3292,16 +3297,9 @@ function OrionLib:Destroy()
     if Orion then
         Orion:Destroy()
     end
-    if OrionLib.BtnMinimize then
-        OrionLib.BtnMinimize:Destroy()
-    end
-    if MinimizeGUI then
-        MinimizeGUI:Destroy()
-    end
-
-    local gui = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
-    if gui then
-        gui:Destroy()
+    local butaoMinimizar = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
+    if butaoMinimizar then
+        butaoMinimizar:Destroy()
     end
 end
 
