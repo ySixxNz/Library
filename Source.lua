@@ -974,7 +974,7 @@ function OrionLib:MakeWindow(WindowConfig)
                 BackgroundTransparency = 1,
                 TextColor3 = Color3.fromRGB(255, 255, 255),
                 PlaceholderColor3 = Color3.fromRGB(210, 210, 210),
-                PlaceholderText = "Search",
+                PlaceholderText = "🔎 Search Tab",
                 Font = Enum.Font.GothamBold,
                 TextWrapped = true,
                 Text = "",
@@ -3168,17 +3168,36 @@ function OrionLib:MakeWindow(WindowConfig)
         return ElementFunction
     end
 
+    function MinimizeGUI:Destroy()
+        local gui = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
+        if gui then
+            gui:Destroy()
+        end
+        if typeof(self) == "Instance" and self:IsA("GuiObject") then
+            self:Destroy()
+        end
+    end
+
     function Functions.ChangeKey(Keybind)
         _currentKey = Keybind
     end
 
     function Functions:Destroy()
         for _, Connection in next, OrionLib.Connections do
-            Connection:Disconnect()
+            if Connection then
+                Connection:Disconnect()
+            end
         end
-        MainWindow:Destroy()
-        MobileIcon:Destroy()
-        MinimizeGUI:Destroy()
+
+        if MainWindow then
+            MainWindow:Destroy()
+        end
+        if MobileIcon then
+            MobileIcon:Destroy()
+        end
+        if MinimizeGUI then
+            MinimizeGUI:Destroy()
+        end
     end
 
     return Functions
@@ -3212,10 +3231,7 @@ function OrionLib:BtnMinimize(config)
     end
 
     local UIS = game:GetService("UserInputService")
-    local dragging
-    local dragInput
-    local dragStart
-    local startPos
+    local dragging, dragInput, dragStart, startPos
 
     local function update(input)
         local delta = input.Position - dragStart
@@ -3267,13 +3283,21 @@ function OrionLib:BtnMinimize(config)
     )
 end
 
-function OrionLib:Switch()
-    Orion.Enabled = not Orion.Enabled
-end
-
 function OrionLib:Destroy()
-    Orion:Destroy()
-    MinimizeGUI:Destroy()
+    if Orion then
+        Orion:Destroy()
+    end
+    if OrionLib.BtnMinimize then
+        OrionLib.BtnMinimize:Destroy()
+    end
+    if MinimizeGUI then
+        MinimizeGUI:Destroy()
+    end
+
+    local gui = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
+    if gui then
+        gui:Destroy()
+    end
 end
 
 return OrionLib
