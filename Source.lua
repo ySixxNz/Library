@@ -650,11 +650,10 @@ function OrionLib:MakeNotification(NotificationConfig)
             ):Play()
 
             wait(NotificationConfig.Time - 0.88)
-            TweenService:Create(
-                NotificationFrame.Icon,
-                TweenInfo.new(0.4, Enum.EasingStyle.Quint),
-                {ImageTransparency = 1}
-            ):Play()
+            local icon = NotificationFrame:FindFirstChild("Icon")
+            if icon then
+                TweenService:Create(icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+            end
             TweenService:Create(
                 NotificationFrame,
                 TweenInfo.new(0.8, Enum.EasingStyle.Quint),
@@ -3168,13 +3167,19 @@ function OrionLib:MakeWindow(WindowConfig)
         return ElementFunction
     end
 
-    function MinimizeGUI:Destroy()
+    local Minimize = {}
+
+    Minimize.GUI = Instance.new("ScreenGui")
+    Minimize.GUI.Name = "ToggleGUI"
+    Minimize.GUI.Parent = game:GetService("CoreGui")
+
+    function Minimize:Destroy()
         local gui = game:GetService("CoreGui"):FindFirstChild("ToggleGUI")
         if gui then
             gui:Destroy()
         end
-        if typeof(self) == "Instance" and self:IsA("GuiObject") then
-            self:Destroy()
+        if self.GUI then
+            self.GUI:Destroy()
         end
     end
 
