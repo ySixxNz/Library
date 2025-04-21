@@ -22,6 +22,30 @@ Icon = <string> - URL to the image you want displayed on the window.
 CloseCallback = <function> - Function to execute when the window is closed.
 ]]
 ```
+## Creating Button Minimize
+
+```lua
+OrionLib:BtnMinimize({
+    Button = {
+        Size = UDim2.new(0, 60, 0, 60),
+        Position = UDim2.new(0, 10, 1, -160),
+        BackgroundTransparency = 1
+    },
+    Corner = {
+        CornerRadius = UDim.new(1, 0)
+    }
+})
+
+--[[
+Button = <table> - Configuration for the minimize button.
+    Size = <UDim2> - The size of the minimize button.
+    Position = <UDim2> - The position of the button on the screen.
+    BackgroundTransparency = <number> - Transparency level of the button's background (0 = opaque, 1 = fully transparent).
+
+Corner = <table> - Configuration for rounding the button edges.
+    CornerRadius = <UDim> - Determines how rounded the button corners are. UDim.new(1, 0) means fully rounded.
+]]
+```
 
 ## Creating a Tab
 ```lua
