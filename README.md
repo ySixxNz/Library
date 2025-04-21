@@ -1,10 +1,16 @@
-## Library
+## Orion Library
+
+**Orion Library** is a powerful and user-friendly UI library made for Roblox script developers. It helps you create sleek, modern interfaces with ease, including windows, tabs, buttons, toggles, sliders, and more. Perfect for making your scripts look clean and pro.
+
+**Ready-to-use script:** [Click here to view the full script](https://raw.githubusercontent.com/Txdd4z/Library/main/Source)
+
+## Library (REQUIRED)
 
 ```lua
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Txdd4z/Library/refs/heads/main/Source.lua")))()
 ```
 
-## Creating a Window
+## Creating a Window (REQUIRED)
 
 ```lua
 local Window =
@@ -21,6 +27,7 @@ IntroIcon = <string> - URL to the image you want to use in the intro animation.
 Icon = <string> - URL to the image you want displayed on the window.
 CloseCallback = <function> - Function to execute when the window is closed.
 ]]
+
 ```
 ## Creating Button Minimize
 
@@ -48,7 +55,8 @@ CornerRadius = <UDim> - Determines how rounded the button corners are. UDim.new(
 ]]
 ```
 
-## Creating a Tab
+## Creating a Tab (REQUIRED AT LEAST ONE)
+
 ```lua
 local Tab =
     Window:MakeTab(
