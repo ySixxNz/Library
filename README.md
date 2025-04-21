@@ -1,7 +1,7 @@
 ## Library
 
 ```lua
-local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Txdd4z/Library//main/Source")))()
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Txdd4z/Library/refs/heads/main/Source.lua")))()
 ```
 
 ## Creating a Window
