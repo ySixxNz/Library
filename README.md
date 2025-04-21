@@ -40,12 +40,11 @@ OrionLib:BtnMinimize(
 
 --[[
 Button = <table> - Configuration for the minimize button.
-    Size = <UDim2> - The size of the minimize button.
-    Position = <UDim2> - The position of the button on the screen.
-    BackgroundTransparency = <number> - Transparency level of the button's background (0 = opaque, 1 = fully transparent).
-
+Size = <UDim2> - The size of the minimize button.
+Position = <UDim2> - The position of the button on the screen.
+BackgroundTransparency = <number> - Transparency level of the button's background (0 = opaque, 1 = fully transparent).
 Corner = <table> - Configuration for rounding the button edges.
-    CornerRadius = <UDim> - Determines how rounded the button corners are. UDim.new(1, 0) means fully rounded.
+CornerRadius = <UDim> - Determines how rounded the button corners are. UDim.new(1, 0) means fully rounded.
 ]]
 ```
 
