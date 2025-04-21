@@ -2,7 +2,7 @@
 
 **Orion Library** is a powerful and user-friendly UI library made for Roblox script developers. It helps you create sleek, modern interfaces with ease, including windows, tabs, buttons, toggles, sliders, and more. Perfect for making your scripts look clean and pro.
 
-**Ready-to-use script:** [Click here to view the full script](https://raw.githubusercontent.com/Txdd4z/Library/main/Source)
+**Ready-to-use script:** [Click here to view the full script](https://github.com/Txdd4z/Library/blob/main/Misc/Exemple.lua)
 
 ## Library (REQUIRED)
 
