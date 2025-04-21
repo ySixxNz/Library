@@ -10,7 +10,7 @@
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Txdd4z/Library/refs/heads/main/Source.lua")))()
 ```
 
-## Creating a Window (REQUIRED)
+## Creating Window (REQUIRED)
 
 ```lua
 local Window =
@@ -55,7 +55,7 @@ CornerRadius = <UDim> - Determines how rounded the button corners are. UDim.new(
 ]]
 ```
 
-## Creating a Tab (REQUIRED AT LEAST ONE)
+## Creating Tab (REQUIRED AT LEAST ONE)
 
 ```lua
 local Tab =
@@ -74,7 +74,7 @@ PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
 ]]
 ```
 
-## Creating a Section
+## Creating Section
 
 ```lua
 local Section =
@@ -89,7 +89,7 @@ Name = <string> - The name of the section.
 ]]
 ```
 
-## Creating a Notification
+## Creating Notification
 
 ```lua
 OrionLib:MakeNotification(
@@ -110,7 +110,7 @@ Time = <number> - The duration of the notification.
 
 ```
 
-## Creating a Button
+## Creating Button
 
 ```lua
 Tab:AddButton(
@@ -128,7 +128,7 @@ Callback = <function> - The function of the button.
 ]]
 ```
 
-## Creating a Toggle
+## Creating Toggle
 
 ```lua
 Tab:AddToggle(
@@ -154,7 +154,7 @@ Callback = <function> - The function of the toggle.
 CoolToggle:Set(true)
 ```
 
-## Creating a Color Picker
+## Creating Color Picker
 
 ```lua
 Tab:AddColorpicker(
@@ -180,7 +180,7 @@ Callback = <function> - The function of the colorpicker.
 ColorPicker:Set(Color3.fromRGB(255,255,255))
 ```
 
-## Creating a Slider
+## Creating Slider
 
 ```lua
 Tab:AddSlider(
@@ -217,7 +217,7 @@ Slider:Set(2)
 
 Make sure you make your slider a variable (local CoolSlider = Tab:AddSlider...) for this to work.
 
-## Creating a Label
+## Creating Label
 
 ```lua
 Tab:AddLabel("Label")
@@ -229,7 +229,7 @@ Tab:AddLabel("Label")
 CoolLabel:Set("New Label!")
 ```
 
-## Creating a Paragraph
+## Creating Paragraph
 
 ```lua
 Tab:AddParagraph("Paragraph", "Paragraph content")
@@ -263,7 +263,7 @@ Callback = <function> - The function of the textbox.
 ]]
 ```
 
-## Creating a Keybind
+## Creating Keybind
 
 ```lua
 Tab:AddBind(
@@ -291,7 +291,7 @@ Callback = <function> - The function of the bind.
 Bind:Set(Enum.KeyCode.E)
 ```
 
-## Creating a Dropdown
+## Creating Dropdown
 
 ```lua
 Tab:AddDropdown(
@@ -363,6 +363,7 @@ Flags only work with toggle, slider, dropdown, bind, and colorpicker.
 In order to make your interface use the configs function you first need to add the `SaveConfig` and `ConfigFolder` arguments to your window function. The explanation of these arguments in above. Then you need to add the `Flag` and `Save` values to every toggle, slider, dropdown, bind, and colorpicker you want to include in the config file. The `Flag = <string> `argument is the ID of an element in the config file. `The Save = <bool>`  argument includes the element in the config file. Config files are made for every game the library is launched in.
 
 ## Destroying the Interface
+
 ```lua
 OrionLib:Destroy()
 ```
