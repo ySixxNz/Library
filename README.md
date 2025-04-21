@@ -25,16 +25,18 @@ CloseCallback = <function> - Function to execute when the window is closed.
 ## Creating Button Minimize
 
 ```lua
-OrionLib:BtnMinimize({
-    Button = {
-        Size = UDim2.new(0, 60, 0, 60),
-        Position = UDim2.new(0, 10, 1, -160),
-        BackgroundTransparency = 1
-    },
-    Corner = {
-        CornerRadius = UDim.new(1, 0)
+OrionLib:BtnMinimize(
+    {
+        Button = {
+            Size = UDim2.new(0, 60, 0, 60),
+            Position = UDim2.new(0, 10, 1, -160),
+            BackgroundTransparency = 1
+        },
+        Corner = {
+            CornerRadius = UDim.new(1, 0)
+        }
     }
-})
+)
 
 --[[
 Button = <table> - Configuration for the minimize button.
@@ -50,19 +52,19 @@ Corner = <table> - Configuration for rounding the button edges.
 ## Creating a Tab
 ```lua
 local Tab =
-            Window:MakeTab(
-            {
-                Name = "Tab 1",
-                Icon = "rbxassetid://4483345998",
-                PremiumOnly = false
-            }
-        )
-        
-        --[[
-                Name = <string> - The name of the tab.
-                Icon = <string> - The icon of the tab.
-                PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
-                ]]
+    Window:MakeTab(
+    {
+        Name = "Tab 1",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    }
+)
+
+--[[
+Name = <string> - The name of the tab.
+Icon = <string> - The icon of the tab.
+PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+]]
 ```
 
 ## Creating a Section
@@ -75,9 +77,9 @@ local Section =
             }
         )
         
-        --[[
-                Name = <string> - The name of the section.
-                ]]
+--[[
+Name = <string> - The name of the section.
+]]
 ```
 
 ## Creating a Notification
@@ -91,13 +93,13 @@ OrionLib:MakeNotification(
                 Time = 5
             }
         )
-        
-        --[[
-                Title = <string> - The title of the notification.
-                Content = <string> - The content of the notification.
-                Image = <string> - The icon of the notification.
-                Time = <number> - The duration of the notification.
-                ]]
+
+--[[
+Title = <string> - The title of the notification.
+Content = <string> - The content of the notification.
+Image = <string> - The icon of the notification.
+Time = <number> - The duration of the notification.
+]]
 
 ```
 
@@ -113,10 +115,10 @@ Tab:AddButton(
               }
           )
           
-          --[[
-                    Name = <string> - The name of the button.
-                    Callback = <function> - The function of the button.
-                    ]]
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
 ```
 
 ## Creating a Toggle
@@ -132,11 +134,11 @@ Tab:AddToggle(
             }
         )
         
-        --[[
-                Name = <string> - The name of the toggle.
-                Default = <bool> - The default value of the toggle.
-                Callback = <function> - The function of the toggle.
-                ]]
+--[[
+Name = <string> - The name of the toggle.
+Default = <bool> - The default value of the toggle.
+Callback = <function> - The function of the toggle.
+]]
 ```
 
 ## Changing the value of an existing Toggle
@@ -158,11 +160,11 @@ Tab:AddColorpicker(
             }
         )
         
-        --[[
-                Name = <string> - The name of the colorpicker.
-                Default = <color3> - The default value of the colorpicker.
-                Callback = <function> - The function of the colorpicker.
-                ]]
+--[[
+Name = <string> - The name of the colorpicker.
+Default = <color3> - The default value of the colorpicker.
+Callback = <function> - The function of the colorpicker.
+]]
 ```
 
 ## Setting the value of the selector
@@ -189,15 +191,15 @@ Tab:AddSlider(
             }
         )
         
-        --[[
-                Name = <string> - The name of the slider.
-                Min = <number> - The minimal value of the slider.
-                Max = <number> - The maximum value of the slider.
-                Increment = <number> - How much the slider will change value when dragging.
-                Default = <number> - The default value of the slider.
-                ValueName = <string> - The text after the value number.
-                Callback = <function> - The function of the slider.
-                ]]
+--[[
+Name = <string> - The name of the slider.
+Min = <number> - The minimal value of the slider.
+Max = <number> - The maximum value of the slider.
+Increment = <number> - How much the slider will change value when dragging.
+Default = <number> - The default value of the slider.
+ValueName = <string> - The text after the value number.
+Callback = <function> - The function of the slider.
+]]
 ```
 
 ## Changing the Slider Value
@@ -246,12 +248,12 @@ Tab:AddTextbox(
 	    }
 	)
 	
-		        --[[
-				Name = <string> - The name of the textbox.
-				Default = <string> - The default value of the textbox.
-				TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
-				Callback = <function> - The function of the textbox.
-				]]
+--[[
+Name = <string> - The name of the textbox.
+Default = <string> - The default value of the textbox.
+TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
+Callback = <function> - The function of the textbox.
+]]
 ```
 
 ## Creating a Keybind
@@ -268,12 +270,12 @@ Tab:AddBind(
             }
         )
         
-        --[[
-                Name = <string> - The name of the bind.
-                Default = <keycode> - The default value of the bind.
-                Hold = <bool> - Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
-                Callback = <function> - The function of the bind.
-                ]]
+--[[
+Name = <string> - The name of the bind.
+Default = <keycode> - The default value of the bind.
+Hold = <bool> - Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
+Callback = <function> - The function of the bind.
+]]
 ```
 
 ## Changing the value of a bind
@@ -296,12 +298,12 @@ Tab:AddDropdown(
             }
         )
         
-        --[[
-                Name = <string> - The name of the dropdown.
-                Default = <string> - The default value of the dropdown.
-                Options = <table> - The options in the dropdown.
-                Callback = <function> - The function of the dropdown.
-                ]]
+--[[
+Name = <string> - The name of the dropdown.
+Default = <string> - The default value of the dropdown.
+Options = <table> - The options in the dropdown.
+Callback = <function> - The function of the dropdown.
+]]
 ```
 
 ## Adding a set of new Dropdown buttons to an existing menu
